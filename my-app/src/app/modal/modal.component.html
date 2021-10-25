@@ -1,0 +1,67 @@
+<div class="modal-header">
+  <h4 class="modal-title">Данные о владельце</h4>
+</div>
+<div class="modal-body">
+  <div class="card lesson-border">
+    <div class="card-body">
+      <form [formGroup]="formOwner">
+        <div class="mb-3">
+          <label for="exampleInputPassword1"  class="form-label">Имя</label>
+          <input type="text" class="form-control" id="exampleInputPassword1" formControlName="firstName" [ngClass]="{ 'is-invalid':formOwner.controls['firstName'].errors }" required>
+          <div *ngIf=" formOwner.controls['firstName'].errors" class="invalid-feedback">
+            <div *ngIf="formOwner.controls['firstName'].errors.required">Укажите имя</div>
+            <div *ngIf="formOwner.controls['firstName']?.value?.length < 3 && formOwner.controls['firstName']?.value?.length">Имя должно состоять как минимум з 3 букв</div>
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="exampleInputPassword1"  class="form-label">Фамилия</label>
+          <input type="text" class="form-control" id="exampleInputPassword2" formControlName="lastName" [ngClass]="{ 'is-invalid':formOwner.controls['lastName'].errors }" required>
+          <div *ngIf=" formOwner.controls['lastName'].errors" class="invalid-feedback">
+            <div *ngIf="formOwner.controls['lastName'].errors.required">Укажите фамилию</div>
+            <div *ngIf="formOwner.controls['lastName']?.value?.length < 3 && formOwner.controls['lastName']?.value?.length">Фамилия должна состоять как минимум з 3 букв</div>
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="exampleInputPassword3"  class="form-label">Отчество</label>
+          <input type="text" class="form-control" id="exampleInputPassword3" formControlName="middleName" [ngClass]="{ 'is-invalid':formOwner.controls['middleName'].errors }" required>
+          <div *ngIf=" formOwner.controls['middleName'].errors" class="invalid-feedback">
+            <div *ngIf="formOwner.controls['middleName'].errors.required">Укажите отчество</div>
+            <div *ngIf="formOwner.controls['middleName']?.value?.length < 3 && formOwner.controls['middleName']?.value?.length">Отчество должно состоять как минимум з 3 букв</div>
+          </div>
+        </div>
+
+      <h1 class="mx-2">Автомобили</h1>
+      <table class="table mt-3 ">
+        <thead>
+        <tr style="text-align: center">
+          <th scope="col">Номер</th>
+          <th scope="col">Марка</th>
+          <th scope="col">Модель</th>
+          <th scope="col">Год</th>
+        </tr>
+        </thead>
+
+        <ng-container formArrayName="ownersCars">
+        <tbody  *ngFor="let car of ownersCars.controls; let i = index">
+          <tr style="text-align: center" formGroupName="{{i}}">
+            <td > <input  type="text"  class="form-control" placeholder="BC0000BC" formControlName="carNumber" [ngClass]="{'is-invalid':ownersCars.controls[i].get('carNumber')?.invalid}"  required></td>
+            <td> <input type="text" class="form-control" placeholder="Honda" formControlName="carName" [ngClass]="{'is-invalid':ownersCars.controls[i].get('carName')?.invalid}" required>
+            </td>
+            <td><input type="text" class="form-control" placeholder="Accord"  formControlName="carModel" [ngClass]="{'is-invalid':ownersCars.controls[i].get('carModel')?.invalid}" required></td>
+            <td><input type="text" class="form-control" placeholder="2021" formControlName="carYear" [ngClass]="{'is-invalid':ownersCars.controls[i].get('carYear')?.invalid}" required></td>
+            <td>
+              <button class="btn btn-danger fa fa-trash" (click)="deleteCar(car, i)" [disabled]="ownersCars.length === 1"></button>
+            </td>
+          </tr>
+        </tbody>
+        </ng-container>
+      </table>
+      </form>
+    </div>
+  </div>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-primary" (click)="addCar()">Добавить автомобиль</button>
+  <button type="button" class="btn btn-primary" [disabled]="checkValid"  (click)="saveClick()">Сохранить</button>
+  <button type="button" class="btn btn-outline-dark" (click)="activeModal.close('Close click')">Close</button>
+</div>

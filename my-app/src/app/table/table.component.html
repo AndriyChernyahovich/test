@@ -1,0 +1,21 @@
+<table class="table mt-3 " >
+  <tr style="text-align: center">
+    <th scope="col" *ngFor="let tableHead of tableTH" >{{tableHead}}</th>
+  </tr>
+  <tbody >
+  <tr *ngFor="let owner of owners; let i = index" style="text-align: center ">
+    <td>{{owner.id}}</td>
+    <td >{{owner.lastName}}</td>
+    <td >{{owner.firstName}}</td>
+    <td >{{owner.middleName}}</td>
+    <td >{{owner.ownersCars.length}}</td>
+    <td>
+      <button class="btn btn-info" (click)="openModal(owner)">Редактировать</button>
+<!--      <button class="btn btn-info" data-bs-toggle="modal" data-bs-target="#exampleModal"  >Редактировать</button>-->
+
+      <button class="btn btn-danger mx-3" (click)="deleteOwners(owner)">Удалить</button>
+    </td>
+  </tr>
+  </tbody>
+</table>
+
